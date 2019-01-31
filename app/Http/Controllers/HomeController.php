@@ -37,11 +37,9 @@ class HomeController extends Controller
         if (!empty($user))
             $user = $user->load('user');
 
-        //return $user;
         $user = persons::where('user_id', Auth::user()->id)->orderBy('id', 'asc')->first();
         $data['user'] = $user;
         return view('user_registration')->with($data);
-
     }
 
     public function registerUser(persons $user, Request $request)
@@ -76,11 +74,10 @@ class HomeController extends Controller
 
     public function index()
     {
-
         $balance = user_balance::where('user_id', Auth::user()->id)->orderBy('id', 'asc')->get();
         $transactions = transactions::where('user_id', Auth::user()->id)->count();
         $data['breadcrumb'] = [
-            ['title' => 'Dashboard', 'path' => '/', 'icon' => 'fa fa-dashboard', 'active' => 1, 'is_module' => 1]
+            ['title' => 'Dashbosard', 'path' => '/', 'icon' => 'fa fa-dashboard', 'active' => 1, 'is_module' => 1]
         ];
         $countproduct = products::count();
         $countcart = cart::where('user_id', Auth::user()->id)->count();

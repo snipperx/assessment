@@ -34,6 +34,7 @@
                                         <th>Name</th>
                                         <th>Description</th>
                                         <th>Price</th>
+                                        <th>Quantity</th>
                                         <th>Date</th>
                                         <th>Image</th>
                                         <th style="width: 10px; text-align: center;"></th>
@@ -45,8 +46,9 @@
                                             <tr>
                                                 <td>{{ !empty($product->name) ? $product->name : '' }}</td>
                                                 <td>{{ !empty($product->description) ? $product->description : '' }}</td>
-                                                <td>{{ !empty($product->price) ? $product->price : '' }}</td>
-                                                <td>{{ !empty($product->date) ? date('d M Y', $product->date) : '' }}
+                                                <td>{{ !empty($product->price) ? 'R' .number_format($product->price, 2) : 0 }}</td>
+                                                <td>{{ !empty($product->quantity) ? $product->quantity : '' }}</td>
+                                                <td>{{ !empty($product->date) ? date('d M Y', $product->date) : '' }}</td>
                                                 <td>
                                                     <div class="product-img">
                                                         <img src="{{ (!empty($product->product_image)) ? Storage::disk('local')->url("product_image/$product->product_image") : 'http://placehold.it/60x50' }}"
@@ -58,12 +60,7 @@
                                                        class="btn btn-sm btn-info btn-flat pull-left"><i
                                                                 class="fa fa-edit"></i>Edit</a>
                                                 </td>
-                                                <td type="button" class="btn btn-sm btn-info btn-flat pull-left"
-                                                    id="delete_button"
-                                                    name="command"
-                                                    onclick="if(confirm('Are you sure you want to delete this Product ?')){ deleteRecord()} else {return false;}"
-                                                    value="Delete"><i class="fa fa-trash"></i> Delete User
-                                                </td>
+                                                {{----}}
                                             </tr>
                                         @endforeach
                                     @endif
@@ -73,6 +70,7 @@
                                         <th>Name</th>
                                         <th>Description</th>
                                         <th>Price</th>
+                                        <th>Quantity</th>
                                         <th>Date</th>
                                         <th>Image</th>
                                     </tr>

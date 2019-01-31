@@ -66,35 +66,36 @@ class TransactionController extends Controller
 
     public function viewcart()
     {
-        $count = cart::count();
-        if ($count == 0) {
-            $totalDiscount = 0;
-            $productID = 0;
-            $shoppingCart = products::take(0)->get();
-            $data['shoppingCart'] = $shoppingCart;
-            $data['productID'] = $productID;
-            $data['totalDiscount'] = $totalDiscount;
-            return view('basket')->with($data);
-        } else
-            $Cart = cart::where('user_id', Auth::user()->id)->first();
 
-        $product = products::where('id', $Cart->product_id)->first();
-        $shoppingCart = products::where('id', $Cart->product_id)->get();
-        $discItem = product_discount::all();
-        $totalDiscount = 0;
-        foreach ($discItem as $disc) {
-            if ($product->price >= $disc->min_price && $product->price <= $disc->max_price) {
-                $totalDiscount = $disc->discount * $product->price;
+        $Cart = cart::where('user_id', Auth::user()->id)->first();
+        if (!empty($Cart)) {
+
+            $product = products::where('id', $Cart->product_id)->first();
+            $shoppingCart = products::where('id', $Cart->product_id)->get();
+            $discItem = product_discount::all();
+            $totalDiscount = 0;
+            foreach ($discItem as $disc) {
+                if ($product->price >= $disc->min_price && $product->price <= $disc->max_price) {
+                    $totalDiscount = $disc->discount * $product->price;
+                }
             }
-        }
+            //return $shoppingCart;
+            $balance = user_balance::where('user_id', Auth::user()->id)->orderBy('id', 'asc')->get();
+            $data['balance'] = $balance;
+            $data['shoppingCart'] = $shoppingCart;
+            $productID = $product->id;
+            $totalDiscount = $product->price - $totalDiscount;
+            $data['totalDiscount'] = $totalDiscount;
+            $data['productID'] = $productID;
+        } elseif (empty($Cart)){
+        $product = products::orderby('id', 'asc')->get();
+        $shoppingCart = cart::where('user_id', Auth::user()->id)->get();
 
         $balance = user_balance::where('user_id', Auth::user()->id)->orderBy('id', 'asc')->get();
         $data['balance'] = $balance;
-        $productID = $product->id;
-        $totalDiscount = $product->price - $totalDiscount;
-        $data['totalDiscount'] = $totalDiscount;
-        $data['productID'] = $productID;
         $data['shoppingCart'] = $shoppingCart;
+    }
+
         return view('basket')->with($data);
     }
 
@@ -105,6 +106,7 @@ class TransactionController extends Controller
         $product = products::where('id', $productID)->first();
         //check if user has enough credit
         $userBalance = user_balance::where('user_id', Auth::user()->id)->get();
+
 
         if ($userBalance->max()->balance >= $totalDisc) {
             $balance = $userBalance->max()->balance - $totalDisc;
@@ -138,9 +140,11 @@ class TransactionController extends Controller
             $transaction->amount = $userBalance->max()->balance;
             $transaction->date = strtotime(date('Y-m-d'));
             $transaction->save();
-            return back()->with('success_edit', "The user's details have been successfully updated.");
-           // return redirect()->back()->with('alert', 'Insuffient Funds , please laod credit');
+            // return redirect('/cart/checkout');
+            //  return back()->with('success_edit', "'Insuffient Funds , please laod credit'.");
         }
+
+        return back();
     }
 
     public function deletecheckout(cart $cart)

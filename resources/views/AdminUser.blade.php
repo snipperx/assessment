@@ -67,6 +67,7 @@
                         <th>Name</th>
                         <th>Description</th>
                         <th>Price</th>
+                        <th>Quantity</th>
                         <th>Date</th>
                         <th>Image</th>
                     </tr>
@@ -77,7 +78,8 @@
                             <tr>
                                 <td>{{ !empty($product->name) ? $product->name : '' }}</td>
                                 <td>{{ !empty($product->description) ? $product->description : '' }}</td>
-                                <td>{{ !empty($product->price) ? $product->price : '' }}</td>
+                                <td>{{ !empty($product->price) ? 'R' .number_format($product->price, 2) : 0 }}</td>
+                                <td>{{ !empty($product->quantity) ? $product->quantity : '' }}</td>
                                 <td>{{ !empty($product->date) ? date('d M Y', $product->date) : '' }}
                                 <td>
                                     <div class="product-img">
