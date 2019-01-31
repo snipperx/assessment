@@ -51,7 +51,7 @@
                         <div class="col-sm-8">
                             <div class="input-group">
                                 <div class="input-group-addon">
-                                    <i class="fa fa-home"></i>
+
                                 </div>
                                 <input type="text" class="form-control" id="name" name="name" value="" placeholder="Enter product name">
                             </div>
@@ -63,7 +63,7 @@
                         <div class="col-sm-8">
                             <div class="input-group">
                                 <div class="input-group-addon">
-                                    <i class="fa fa-home"></i>
+
                                 </div>
                                 <input type="text" class="form-control" id="description" name="description" value="" placeholder="enter description">
                             </div>
@@ -75,7 +75,7 @@
                         <div class="col-sm-8">
                             <div class="input-group">
                                 <div class="input-group-addon">
-                                    <i class="fa fa-home"></i>
+
                                 </div>
                                 <input type="number" class="form-control" id="price" name="price" value="" placeholder="Enter price ">
                             </div>
@@ -87,7 +87,7 @@
                         <div class="col-sm-8">
                             <div class="input-group">
                                 <div class="input-group-addon">
-                                    <i class="fa fa-book"></i>
+
                                 </div>
                                 <input type="number" class="form-control" id="quantity" name="quantity" value="" placeholder="Enter quantity">
                             </div>

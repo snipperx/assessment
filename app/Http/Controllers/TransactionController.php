@@ -87,14 +87,14 @@ class TransactionController extends Controller
             $totalDiscount = $product->price - $totalDiscount;
             $data['totalDiscount'] = $totalDiscount;
             $data['productID'] = $productID;
-        } elseif (empty($Cart)){
-        $product = products::orderby('id', 'asc')->get();
-        $shoppingCart = cart::where('user_id', Auth::user()->id)->get();
+        } elseif (empty($Cart)) {
+            $product = products::orderby('id', 'asc')->get();
+            $shoppingCart = cart::where('user_id', Auth::user()->id)->get();
 
-        $balance = user_balance::where('user_id', Auth::user()->id)->orderBy('id', 'asc')->get();
-        $data['balance'] = $balance;
-        $data['shoppingCart'] = $shoppingCart;
-    }
+            $balance = user_balance::where('user_id', Auth::user()->id)->orderBy('id', 'asc')->get();
+            $data['balance'] = $balance;
+            $data['shoppingCart'] = $shoppingCart;
+        }
 
         return view('basket')->with($data);
     }
@@ -106,8 +106,16 @@ class TransactionController extends Controller
         $product = products::where('id', $productID)->first();
         //check if user has enough credit
         $userBalance = user_balance::where('user_id', Auth::user()->id)->get();
+        $count = $userBalance->count();
 
-
+        if ($count == 0) {
+            $balance = new user_balance();
+            $balance->user_id = Auth::user()->id;
+            $balance->balance = 0;
+            $balance->date = strtotime(date('Y-m-d'));
+            $balance->save();
+        }
+        
         if ($userBalance->max()->balance >= $totalDisc) {
             $balance = $userBalance->max()->balance - $totalDisc;
             $userbalances = new user_balance();
