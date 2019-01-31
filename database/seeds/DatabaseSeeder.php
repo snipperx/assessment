@@ -17,35 +17,35 @@ class DatabaseSeeder extends Seeder
 
         //insert default user
         $user = new User;
-        $user->name = 'gift';
-        $user->email = 'gift@gmail.com';
-        $user->password = bcrypt('pas5w0rd');
+        $user->name = 'Admin';
+        $user->email = 'admin@admin.com';
+        $user->password = bcrypt('admin');
         $user->isAdmin = 0; // 0 for admin && 1 for normal user
         $user->status = 1;
         $user->save();
 
         $persons = new persons();
-        $persons->first_name = 'Gift';
-        $persons->surname = 'Ncube';
-        $persons->email = 'gift@gmail.com';
+        $persons->first_name = 'Admin';
+        $persons->surname = 'Senator';
+        $persons->email = 'admin@admin.com';
         $persons->status = 1;
         $persons->isAdmin = 0; // 0 for admin && 1 for normal user
         $user->addPerson($persons);
 
         $user = new User;
-        $user->name = 'faith';
-        $user->email = 'faith@gmail.com';
+        $user->name = 'Optimise Prime';
+        $user->email = 'prime@gmail.com';
         $user->password = bcrypt('secret');
         $user->status = 1;
-        $user->isAdmin = 0; // 0 for admin && 1 for normal user
+        $user->isAdmin = 1; // 0 for admin && 1 for normal user
         $user->save();
 
         $persons = new persons();
-        $persons->first_name = 'Faith';
-        $persons->surname = 'mstharini';
-        $persons->email = 'faith@gmail.com';
+        $persons->first_name = 'Optimise ';
+        $persons->surname = 'Prime';
+        $persons->email = 'prime@gmail.com';
         $persons->status = 1;
-        $persons->isAdmin = 0; // 0 for admin && 1 for normal user
+        $persons->isAdmin = 1; // 0 for admin && 1 for normal user
         $user->addPerson($persons);
 
     }
