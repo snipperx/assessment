@@ -66,6 +66,16 @@ class TransactionController extends Controller
 
     public function viewcart()
     {
+        $userBalance = user_balance::where('user_id', Auth::user()->id)->get();
+        $count = $userBalance->count();
+
+        if ($count == 0) {
+            $balance = new user_balance();
+            $balance->user_id = Auth::user()->id;
+            $balance->balance = 0;
+            $balance->date = strtotime(date('Y-m-d'));
+            $balance->save();
+        }
 
         $Cart = cart::where('user_id', Auth::user()->id)->first();
         if (!empty($Cart)) {
@@ -79,7 +89,6 @@ class TransactionController extends Controller
                     $totalDiscount = $disc->discount * $product->price;
                 }
             }
-            //return $shoppingCart;
             $balance = user_balance::where('user_id', Auth::user()->id)->orderBy('id', 'asc')->get();
             $data['balance'] = $balance;
             $data['shoppingCart'] = $shoppingCart;
@@ -106,15 +115,6 @@ class TransactionController extends Controller
         $product = products::where('id', $productID)->first();
         //check if user has enough credit
         $userBalance = user_balance::where('user_id', Auth::user()->id)->get();
-        $count = $userBalance->count();
-
-        if ($count == 0) {
-            $balance = new user_balance();
-            $balance->user_id = Auth::user()->id;
-            $balance->balance = 0;
-            $balance->date = strtotime(date('Y-m-d'));
-            $balance->save();
-        }
 
         if ($userBalance->max()->balance >= $totalDisc) {
             $balance = $userBalance->max()->balance - $totalDisc;
@@ -138,7 +138,7 @@ class TransactionController extends Controller
 
             $cart = cart::where('product_id', $productID)->first();
             $cart->delete();
-
+            return redirect()->back()->with('alert', 'Product Purchased');
             return back();
         } elseif ($userBalance->max()->balance <= $totalDisc) {
 
@@ -148,11 +148,10 @@ class TransactionController extends Controller
             $transaction->amount = $userBalance->max()->balance;
             $transaction->date = strtotime(date('Y-m-d'));
             $transaction->save();
-            // return redirect('/cart/checkout');
-            //  return back()->with('success_edit', "'Insuffient Funds , please laod credit'.");
         }
 
-        return back();
+        return redirect()->back()->with('alert', 'Insufficient Funds, Please top up balance!');
+
     }
 
     public function removeproduct(cart $cart)

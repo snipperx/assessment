@@ -23,18 +23,13 @@
                 <form class="form-horizontal" method="POST" action="/cart/checkout">
                     {{ csrf_field() }}
                     <div class="box-body">
-                        @if (count($errors) > 0)
-                            <div class="alert alert-danger alert-dismissible fade in">
-                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;
-                                </button>
-                                <h4><i class="icon fa fa-ban"></i> Invalid Input Data!</h4>
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
+                        @if (session('alert'))
+                            <div class="alert alert-success">
+                                {{ session('alert') }}
                             </div>
                         @endif
+
+
                         <input type="hidden" name="totaldisc" value="{{!empty($totalDiscount) ? $totalDiscount : ''}}">
                         <input type="hidden" name="productId" value="{{!empty($productID) ? $productID : ''}}">
                         <div class="col-md-12 ">
@@ -123,6 +118,7 @@
     <!-- Select2 -->
     <script src="/bower_components/AdminLTE/plugins/select2/select2.full.min.js"></script>
     <script type="text/javascript">
+
 
         $(function () {
             $('#example2').DataTable({

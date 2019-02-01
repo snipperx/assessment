@@ -43,10 +43,10 @@ class TopUpController extends Controller
 
         if (!empty($balance)) {
             $amount += $balance['balance'];
-            user_balance::where('user_id', Auth::user()->id)->update(['balance' => $amount]);
+            user_balance::where('date', $today)->update(['balance' => $amount]);
 
         } else {
-            $balances = user_balance::where('user_id', Auth::user()->id)->where('date', strtotime($yesterday))->orderBy('id', 'asc')->first();
+            $balances = user_balance::where('user_id', Auth::user()->id)->orderBy('id', 'asc')->first();
             $amounts = 0;
             if (!empty($balances)) {
                 $amounts = $balances['balance'];

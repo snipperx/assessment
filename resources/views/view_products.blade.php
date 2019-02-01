@@ -30,6 +30,7 @@
                     <a class="nav-link pull-right" href="/view/basket" aria-expanded="true">
                         <i class="fa fa-cart-plus fa-1x"></i>
                         <span class="badge badge-danger  ">{{$countproducts}}</span>
+                        <h5>Cart</h5>
                     </a>
                 </div>
 
