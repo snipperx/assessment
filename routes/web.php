@@ -47,5 +47,5 @@ Route::get('/view/basket', 'TransactionController@viewcart');
 Route::post('/cart/checkout', 'TransactionController@checkout');
 
 Route::get('/cart/manage/{cart}/delete', 'TransactionController@deletecheckout');
-
+Route::get('/cart/{cart}/remove', 'TransactionController@removeproduct');
 

@@ -47,8 +47,8 @@
                                                 <td>{{ !empty($product->name) ? $product->name : '' }}</td>
                                                 <td>{{ !empty($product->description) ? $product->description : '' }}</td>
                                                 <td>{{ !empty($product->price) ? 'R' .number_format($product->price, 2) : 0 }}</td>
-                                                <td>{{ !empty($product->quantity) ? $product->quantity : '' }}</td>
-                                                <td>{{ !empty($product->date) ? date('d M Y', $product->date) : '' }}</td>
+                                                td>{{ !empty($product->description) ? $product->description : '' }}</td>
+                                                <td>{{ !empty($product->date) ? date('d M Y', $product->date) : '' }}
                                                 <td>
                                                     <div class="product-img">
                                                         <img src="{{ (!empty($product->product_image)) ? Storage::disk('local')->url("product_image/$product->product_image") : 'http://placehold.it/60x50' }}"

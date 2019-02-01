@@ -115,7 +115,7 @@ class TransactionController extends Controller
             $balance->date = strtotime(date('Y-m-d'));
             $balance->save();
         }
-        
+
         if ($userBalance->max()->balance >= $totalDisc) {
             $balance = $userBalance->max()->balance - $totalDisc;
             $userbalances = new user_balance();
@@ -155,10 +155,11 @@ class TransactionController extends Controller
         return back();
     }
 
-    public function deletecheckout(cart $cart)
+    public function removeproduct(cart $cart)
     {
-        return $cart;
+        //return $cart;
         $cart->delete();
         return redirect('/view/basket');
     }
+
 }

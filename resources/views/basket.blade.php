@@ -69,6 +69,12 @@
                                                                      alt="Product Image" style="width:75px;height:50px">
                                                             </div>
                                                         </td>
+                                                        {{--<td>--}}
+                                                            {{--<a href="{{'/cart/' . $product->id . '/remove'}}"--}}
+                                                               {{--class="btn btn-sm btn-info pull-left"><i--}}
+                                                                        {{--class="fa fa-trash"></i> remove</a>--}}
+                                                        {{--</td>--}}
+
                                                     </tr>
                                                 @endforeach
                                             @endif
