@@ -21,7 +21,6 @@ class TransactionController extends Controller
 
     public function index()
     {
-
         $transaction = DB::table('transactions')
             ->select('transactions.*', 'persons.*')
             ->leftJoin('persons', 'transactions.user_id', '=', 'persons.user_id')
@@ -38,7 +37,7 @@ class TransactionController extends Controller
         $cart = cart::count();
         $products = products::get();
         $countproducts = cart::where('user_id', Auth::user()->id)->count();
-//return $products;
+
         $data['cart'] = $cart;
         $data['products'] = $products;
         $data['countproducts'] = $countproducts;
@@ -147,7 +146,7 @@ class TransactionController extends Controller
             $transaction->transaction_details = 'insufficient balance';
             $transaction->amount = $userBalance->max()->balance;
             $transaction->date = strtotime(date('Y-m-d'));
-            $transaction->save();
+            $transaction->update();
         }
 
         return redirect()->back()->with('alert', 'Insufficient Funds, Please top up balance!');

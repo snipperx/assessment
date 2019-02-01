@@ -38,7 +38,7 @@ class TopUpController extends Controller
         $today = strtotime(date('Y-m-d'));
         $amount = $request->amount;
         $user = Auth::user()->id;
-        $balance = user_balance::where('user_id', Auth::user()->id)->orderBy('id', 'asc')->first();
+        $balance = user_balance::where('user_id', Auth::user()->id)->where('date', $today)->orderBy('id', 'asc')->first();
         $yesterday = date('Y-m-d', strtotime('yesterday'));
 
         if (!empty($balance)) {
@@ -46,7 +46,7 @@ class TopUpController extends Controller
             user_balance::where('date', $today)->update(['balance' => $amount]);
 
         } else {
-            $balances = user_balance::where('user_id', Auth::user()->id)->orderBy('id', 'asc')->first();
+            $balances = user_balance::where('user_id', Auth::user()->id)->where('date', strtotime($yesterday))->orderBy('id', 'asc')->first();
             $amounts = 0;
             if (!empty($balances)) {
                 $amounts = $balances['balance'];
@@ -63,6 +63,6 @@ class TopUpController extends Controller
         $newTtran->date = $today;
         $newTtran->save();
 
-        return back();
+        return redirect()->back()->with('alert', 'You have Successfully topped up you wallet!');
     }
 }

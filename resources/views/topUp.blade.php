@@ -21,15 +21,12 @@
             <!-- form start -->
             <form class="form-horizontal" method="POST" action="/balance/update">
                 {{ csrf_field() }}
-                @if (count($errors) > 0)
-                    <div class = "alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
+                @if (session('alert'))
+                    <div class="alert alert-success">
+                        {{ session('alert') }}
                     </div>
                 @endif
+                
                 <div class="box-body">
                     <div class="form-group">
                         <div class="inner">
